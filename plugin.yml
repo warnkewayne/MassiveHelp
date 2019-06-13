@@ -1,0 +1,30 @@
+main: ${project.groupId}.${project.name}
+name: ${project.name}
+version: ${project.version}
+website: ${project.url}
+description: ${project.description}
+authors: [RustyTrumbone]
+depend: [MassiveCore]
+
+permissions:
+  # -------------------------------------------- #
+  # THE REAL NODES
+  # -------------------------------------------- #
+  massivehelp.basecommand:  {description: use the MassiveHelp base command, default: false}
+  massivehelp.use:          {description: open the MassiveHelp menu, default: false}
+  massivehelp.config:       {description: edit the MassiveHelp config, default: false}
+  massivehelp.version:      {description: display the MassiveHelp version, default: false}
+
+  # -------------------------------------------- #
+  # START NOTATION
+  # -------------------------------------------- #
+  massivehelp.*:
+    children:
+      massivehelp.basecommand: true
+      massivehelp.use: true
+      massivehelp.config: true
+      massivehelp.version: true
+
+  # -------------------------------------------- #
+  # KITS
+  # -------------------------------------------- #
