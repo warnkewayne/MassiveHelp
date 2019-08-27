@@ -2,7 +2,6 @@ package com.massivecraft.massivehelp;
 
 import com.massivecraft.massivecore.MassivePlugin;
 import com.massivecraft.massivehelp.cmd.CmdHelp;
-import com.massivecraft.massivehelp.engine.EngineGuiClick;
 import com.massivecraft.massivehelp.entity.MConfColl;
 
 public class MassiveHelp extends MassivePlugin
@@ -28,7 +27,6 @@ public class MassiveHelp extends MassivePlugin
 			MConfColl.class,
 			
 			//Engine
-			EngineGuiClick.class,
 			
 			//Command
 			CmdHelp.class

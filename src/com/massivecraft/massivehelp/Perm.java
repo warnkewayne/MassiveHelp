@@ -13,7 +13,13 @@ public enum Perm implements Identified
 	BASECOMMAND,
 	
 	USE,
-	
+
+	CREATE,
+
+	EDIT,
+
+	DELETE,
+
 	CONFIG,
 	
 	VERSION,

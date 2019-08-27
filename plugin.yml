@@ -11,7 +11,10 @@ permissions:
   # THE REAL NODES
   # -------------------------------------------- #
   massivehelp.basecommand:  {description: use the MassiveHelp base command, default: false}
-  massivehelp.use:          {description: open the MassiveHelp menu, default: false}
+  massivehelp.use:          {description: open MassiveHelp, default: false}
+  massivehelp.create:       {description: create a MassiveHelp menu, default: false}
+  massivehelp.edit:         {description: edit a MassiveHelp menu, default: false}
+  massivehelp.delete:       {description: delete a MassiveHelp menu, default: false}
   massivehelp.config:       {description: edit the MassiveHelp config, default: false}
   massivehelp.version:      {description: display the MassiveHelp version, default: false}
 
@@ -22,9 +25,42 @@ permissions:
     children:
       massivehelp.basecommand: true
       massivehelp.use: true
+      massivehelp.create: true
+      massivehelp.edit: true
+      massivehelp.delete: true
       massivehelp.config: true
       massivehelp.version: true
 
   # -------------------------------------------- #
   # KITS
   # -------------------------------------------- #
+  massivehelp.kit.op:
+    default: op
+    children:
+      massivehelp.*: true
+    massivehelp.kit.rank3:
+      default: false
+      children:
+        massivehelp.kit.rank2: true
+        massivehelp.create: true
+        massivehelp.edit: true
+        massivehelp.delete: true
+        massivehelp.config: true
+    massivehelp.kit.rank2:
+      default: false
+      children:
+        massivehelp.kit.rank1: true
+    massivehelp.kit.rank1:
+      default: false
+      children:
+        massivehelp.kit.rank0: true
+    massivehelp.kit.rank0:
+      default: false
+      children:
+        massivehelp.basecommand: true
+        massivehelp.use: true
+        massivehelp.version: true
+    massivehelp.kit.default:
+      default: true
+      children:
+        massivehelp.kit.rank0: true

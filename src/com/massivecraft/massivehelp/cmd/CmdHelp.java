@@ -16,6 +16,9 @@ public class CmdHelp extends MassiveCommand
 	// FIELDS
 	// -------------------------------------------- //
 	public CmdHelpUse cmdHelpUse = new CmdHelpUse();
+	public CmdHelpCreate cmdHelpCreate = new CmdHelpCreate();
+	public CmdHelpEdit cmdHelpEdit = new CmdHelpEdit();
+	public CmdHelpDelete cmdHelpDelete = new CmdHelpDelete();
 	public CmdHelpConfig cmdHelpConfig = new CmdHelpConfig();
 	public CmdHelpVersion cmdHelpVersion = new CmdHelpVersion();
 	
@@ -27,6 +30,9 @@ public class CmdHelp extends MassiveCommand
 	{
 		//Children
 		this.addChild(this.cmdHelpUse);
+		this.addChild(this.cmdHelpCreate);
+		this.addChild(this.cmdHelpEdit);
+		this.addChild(this.cmdHelpDelete);
 		this.addChild(this.cmdHelpConfig);
 		this.addChild(this.cmdHelpVersion);
 		
