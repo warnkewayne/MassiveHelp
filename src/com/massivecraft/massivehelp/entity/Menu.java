@@ -8,8 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-public class Menu extends Entity<Menu>
-{
+public class Menu extends Entity<Menu> {
     //TODO: Figure out how to tell what kind of coloring
     //TODO: everything needs
 
@@ -17,10 +16,10 @@ public class Menu extends Entity<Menu>
     // CONSTRUCT & META
     // -------------------------------------------- //
 
-    public Menu() {}
+    public Menu() {
+    }
 
-    public Menu(String id, String menuName, String prevMenuId, String nextMenuId, int numMenuItems, MassiveList<MenuItem> listMenuItems)
-    {
+    public Menu(String id, String menuName, String prevMenuId, String nextMenuId, int numMenuItems, MassiveList<MenuItem> listMenuItems) {
         this.id = id;
         this.menuName = menuName;
         this.prevMenuId = prevMenuId;
@@ -31,15 +30,16 @@ public class Menu extends Entity<Menu>
         MenuColl.get().attach(this, id);
     }
 
-    public static Menu get(Object oid) { return MenuColl.get().get(oid); }
+    public static Menu get(Object oid) {
+        return MenuColl.get().get(oid);
+    }
 
     // -------------------------------------------- //
     // OVERRIDE
     // -------------------------------------------- //
 
     @Override
-    public Menu load(Menu that)
-    {
+    public Menu load(Menu that) {
         this.menuName = that.menuName;
         this.prevMenuId = that.prevMenuId;
         this.nextMenuId = that.nextMenuId;
@@ -88,8 +88,7 @@ public class Menu extends Entity<Menu>
     // CORE METHODS
     // -------------------------------------------- //
 
-    public void open(Player sender)
-    {
+    public void open(Player sender) {
         Inventory i;
         i = Bukkit.createInventory(null, 0, this.menuName);
 
@@ -104,8 +103,7 @@ public class Menu extends Entity<Menu>
         sender.openInventory(gui.getInventory());
     }
 
-    public void delete()
-    {
+    public void delete() {
         MenuColl coll = MenuColl.get();
 
         Menu prev = coll.get(prevMenuId);
@@ -117,11 +115,10 @@ public class Menu extends Entity<Menu>
         this.detach();
     }
 
-    private int calcInventorySize()
-    {
+    private int calcInventorySize() {
         //TODO: way too simple probably a better way
 
-       //if(this.numMenuItems <= 14) return 27;
+        //if(this.numMenuItems <= 14) return 27;
 
         //if(this.numMenuItems > 14) return 54;
 
@@ -132,16 +129,14 @@ public class Menu extends Entity<Menu>
     // MENU NAME METHODS
     // -------------------------------------------- //
 
-    public void setMenuName(String menuName)
-    {
-        if(MUtil.equals(this.menuName, menuName)) return;
+    public void setMenuName(String menuName) {
+        if (MUtil.equals(this.menuName, menuName)) return;
 
         this.menuName = menuName;
         this.changed();
     }
 
-    public String getMenuName()
-    {
+    public String getMenuName() {
         return this.menuName;
     }
 
@@ -149,35 +144,30 @@ public class Menu extends Entity<Menu>
     // PREVMENUID METHODS
     // -------------------------------------------- //
 
-    public void setPrevMenuId(String prevMenuId)
-    {
-        if(MUtil.equals(this.prevMenuId, prevMenuId)) return;
+    private void setPrevMenuId(String prevMenuId) {
+        if (MUtil.equals(this.prevMenuId, prevMenuId)) return;
 
         this.prevMenuId = prevMenuId;
         this.changed();
     }
 
-    public void setPrevMenuId(String prevMenuId, boolean swap)
-    {
-        if(swap == false) { setPrevMenuId(prevMenuId); return; }
+    public void setPrevMenuId(String prevMenuId, boolean swap) {
+        if (swap == false) {
+            setPrevMenuId(prevMenuId);
+            return;
+        }
 
         MenuColl coll = MenuColl.get();
 
-        //if prevMenu is Null, then we are creating the Main Menu
-        if(prevMenuId == null)
-        {
-            Menu ROOT = coll.get("root");
-            String oldNext = ROOT.nextMenuId;
+        //if prevMenu is Null, then we are creating a new Menu within Root
+        if (prevMenuId == null) {
+            Root ROOT = RootColl.get().get("mainmenu");
 
-            ROOT.setNextMenuId(this.id);
-            this.prevMenuId = null;
-            this.nextMenuId = oldNext;
         }
 
         // if prevMenu isnt null, then get prevMenu's nextId
         // replace it with this.id and update this.nextId with that id.
-        if(prevMenuId != null)
-        {
+        if (prevMenuId != null) {
             Menu prevMenu = coll.get(prevMenuId);
             String oldNext = prevMenu.nextMenuId;
 
@@ -193,36 +183,34 @@ public class Menu extends Entity<Menu>
     // NEXTMENUID METHODS
     // -------------------------------------------- //
 
-    private void setNextMenuId(String nextMenuId)
-    {
-        if(MUtil.equals(this.nextMenuId, nextMenuId)) return;
+    private void setNextMenuId(String nextMenuId) {
+        if (MUtil.equals(this.nextMenuId, nextMenuId)) return;
 
         this.nextMenuId = nextMenuId;
         this.changed();
     }
 
-    public String getNextMenuId() { return this.nextMenuId; }
+    public String getNextMenuId() {
+        return this.nextMenuId;
+    }
 
     // -------------------------------------------- //
     // NUMMENUITEMS METHODS
     // -------------------------------------------- //
 
-    public void setNumMenuItems(int num)
-    {
-        if(this.numMenuItems == num) return;
+    public void setNumMenuItems(int num) {
+        if (this.numMenuItems == num) return;
 
         this.numMenuItems = num;
         this.changed();
     }
 
-    public void incrementNumMenuItems()
-    {
+    public void incrementNumMenuItems() {
         this.numMenuItems++;
         this.changed();
     }
 
-    public void decrementNumMenuItems()
-    {
+    public void decrementNumMenuItems() {
         this.numMenuItems--;
         this.changed();
     }
@@ -231,4 +219,32 @@ public class Menu extends Entity<Menu>
     // MENUITEMS METHODS
     // -------------------------------------------- //
 
+    public void setListMenuItems(MassiveList<MenuItem> itemList)
+    {
+        if(MUtil.equals(this.listMenuItems, itemList)) return;
+
+        this.listMenuItems = itemList;
+        this.changed();
+    }
+
+    public MassiveList<MenuItem> getListMenuItems()
+    {
+        return this.listMenuItems;
+    }
+
+    public void addToListMenuItems(MenuItem menuItem)
+    {
+        if(this.listMenuItems.contains(menuItem)) return;
+
+        this.listMenuItems.add(menuItem);
+        this.changed();
+    }
+
+    public void removeFromListMenuItems(MenuItem menuItem)
+    {
+        if(! this.listMenuItems.contains(menuItem)) return;
+
+        this.listMenuItems.remove(menuItem);
+        this.changed();
+    }
 }

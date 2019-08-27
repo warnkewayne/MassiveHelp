@@ -18,12 +18,21 @@ public class MenuItem extends Entity<MenuItem>
 
     public MenuItem() {}
 
-    public MenuItem(String id, String title, Material material, String description)
+    public MenuItem(String title, Material material, String menuId, String description)
     {
-        this.id = id;
         this.title = title;
         this.item = material;
+        this.menuId = menuId;
         this.description = description;
+
+        MenuItemColl.get().attach(this, id);
+    }
+
+    public MenuItem(String title, Material material, String menuId)
+    {
+        this.title = title;
+        this.item = material;
+        this.menuId = menuId;
 
         MenuItemColl.get().attach(this, id);
     }
@@ -55,6 +64,12 @@ public class MenuItem extends Entity<MenuItem>
     // Default: null
 
     private Material item;
+
+    // If the instance of MenuItem is linked to a menu
+    // This field will hold that menu FK
+    // Default: null
+
+    private String menuId;
 
     // This is the description of
     // the item & title.

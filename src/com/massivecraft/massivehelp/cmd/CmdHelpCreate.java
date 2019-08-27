@@ -3,6 +3,7 @@ package com.massivecraft.massivehelp.cmd;
 import com.massivecraft.massivecore.MassiveException;
 import com.massivecraft.massivecore.command.MassiveCommand;
 import com.massivecraft.massivecore.command.requirement.RequirementHasPerm;
+import com.massivecraft.massivecore.command.type.enumeration.TypeMaterial;
 import com.massivecraft.massivecore.command.type.primitive.TypeString;
 import com.massivecraft.massivecore.mixin.MixinMessage;
 import com.massivecraft.massivecore.mson.Mson;
@@ -10,6 +11,7 @@ import com.massivecraft.massivehelp.Perm;
 import com.massivecraft.massivehelp.cmd.type.TypeMenu;
 import com.massivecraft.massivehelp.entity.MConf;
 import com.massivecraft.massivehelp.entity.MenuColl;
+import org.bukkit.Material;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ public class CmdHelpCreate extends MassiveCommand
     public CmdHelpCreate()
     {
         this.addParameter(TypeString.get(), "Menu-Name");
+        this.addParameter(TypeMaterial.get(), "Placeholder-Item");
         this.addParameter(TypeMenu.get(), "Previous-Menu-Name", "");
 
         this.addRequirements(RequirementHasPerm.get(Perm.CREATE));
@@ -34,6 +37,7 @@ public class CmdHelpCreate extends MassiveCommand
     public void perform() throws MassiveException
     {
         String menuName = this.readArg();
+        Material item = this.readArg();
         String prevMenu = this.readArg(); // if null, within main menu
 
         MenuColl mc = MenuColl.get();
@@ -43,7 +47,7 @@ public class CmdHelpCreate extends MassiveCommand
 
         if( mc.get(menuName) != null ) mixinMessage.messageOne(sender, Mson.parse("<b>%s already exists. It was not created."), menuName);
 
-        mc.createNewMenu(menuName, prevId);
+        mc.createNewMenu(menuName, item, prevId);
 
         mixinMessage.messageOne(sender, Mson.parse("<i>%s has been created!"), menuName);
     }

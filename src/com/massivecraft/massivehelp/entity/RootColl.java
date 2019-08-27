@@ -1,18 +1,17 @@
 package com.massivecraft.massivehelp.entity;
 
+import com.massivecraft.massivecore.collections.MassiveMap;
 import com.massivecraft.massivecore.store.Coll;
-import org.bukkit.Material;
 
-
-public class MenuColl extends Coll<Menu>
+public class RootColl extends Coll<Root>
 {
     // -------------------------------------------- //
     // INSTANCE & CONSTRUCT
     // -------------------------------------------- //
 
-    private static MenuColl i = new MenuColl();
-    public static MenuColl get() { return i; }
-    public MenuColl() { this.setCleanTaskEnabled(false); }
+    private static RootColl i = new RootColl();
+    public static RootColl get() { return i; }
+    public RootColl() { this.setCleanTaskEnabled(false); }
 
     // -------------------------------------------- //
     // STACK TRACEABILITY
@@ -37,37 +36,17 @@ public class MenuColl extends Coll<Menu>
 
         if (this.getAll().isEmpty())
         {
-            //this.createMenus();
+            createRoot();
             this.syncAll();
         }
     }
 
     // -------------------------------------------- //
-    // MENU CREATION
+    // CREATE ROOT
     // -------------------------------------------- //
 
-    public void createNewMenu(String menuName, Material item, String prevMenu)
+    private void createRoot()
     {
-        Menu m = new Menu();
-        m.setMenuName(menuName);
-        m.setPrevMenuId(prevMenu, true);
-        
-        // get prevMenu and add the created Menu to
-        // its GUI
-        Menu pm = MenuColl.get().get(prevMenu);
-        pm.addToListMenuItems(
-                new MenuItem(menuName, item, m.getId())
-        );
-        pm.incrementNumMenuItems();
-
-        this.get().attach(m, id);
+        new Root("mainmenu", 0, new MassiveMap<MenuItem, Menu>());
     }
-
-    private void createMenus()
-    {
-        //TODO: update this when menus are more "set in stone"
-
-
-    }
-
 }
