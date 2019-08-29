@@ -1,8 +1,11 @@
 package com.massivecraft.massivehelp.entity;
 
+import com.massivecraft.massivecore.chestgui.ChestGui;
 import com.massivecraft.massivecore.collections.MassiveMap;
 import com.massivecraft.massivecore.store.Entity;
 import com.massivecraft.massivecore.util.MUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.inventory.Inventory;
 
 public class Root extends Entity<Root>
 {
@@ -13,9 +16,10 @@ public class Root extends Entity<Root>
 
     public Root() {}
 
-    public Root(String id, int totalMenus, MassiveMap<MenuItem, Menu> materialMenuMap)
+    public Root(String id, String rootName, int totalMenus, MassiveMap<MenuItem, Menu> materialMenuMap)
     {
         this.id = id;
+        this.rootName = rootName;
         this.totalMenus = totalMenus;
         this.materialMenuMap = materialMenuMap;
 
@@ -31,6 +35,9 @@ public class Root extends Entity<Root>
     @Override
     public Root load(Root that)
     {
+        this.rootName = that.rootName;
+        this.totalMenus = that.totalMenus;
+        this.materialMenuMap = that.materialMenuMap;
         return this;
     }
 
@@ -38,10 +45,42 @@ public class Root extends Entity<Root>
     // FIELDS: RAW
     // -------------------------------------------- //
 
+    private String rootName;
+
     private int totalMenus = 0;
 
     private MassiveMap<MenuItem, Menu> materialMenuMap;
 
+    // -------------------------------------------- //
+    // CORE METHODS
+    // -------------------------------------------- //
+
+    private void createGui()
+    {
+        Inventory i;
+        i = Bukkit.createInventory(null, 0, this.rootName);
+
+        //TODO: setItems();
+
+        ChestGui gui = new ChestGui();
+
+        gui.setInventory(i);
+        gui.setAutoremoving(false); // we dont want the gui to go away ):
+        gui.getMeta().put("rootId", this.id); // Utilize Meta Map to provide a way back to this Object
+
+    }
+
+    private void setItems()
+    {
+        // We use returnGuiItem() from MenuItem
+        // and setAction() from ChestGui to help us
+        //
+        // We find optimal positioning for our items
+        // We then create a ItemStack with returnGuiItem()
+        // then use setAction() to link another menu
+
+
+    }
     // -------------------------------------------- //
     // TOTAL MENUS METHODS
     // -------------------------------------------- //

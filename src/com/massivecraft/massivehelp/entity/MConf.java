@@ -5,7 +5,6 @@ import com.massivecraft.massivecore.command.editor.annotation.EditorName;
 import com.massivecraft.massivecore.store.Entity;
 import com.massivecraft.massivecore.util.MUtil;
 
-import java.lang.invoke.MutableCallSite;
 import java.util.List;
 
 @EditorName("config")
@@ -17,7 +16,7 @@ public class MConf extends Entity<MConf>
 	
 	protected static transient MConf i;
 	public static MConf get() { return i; }
-
+	
 	// -------------------------------------------- //
 	// HELP BOOKS
 	// -------------------------------------------- //
@@ -28,24 +27,6 @@ public class MConf extends Entity<MConf>
 	// Default: False
 
 	public boolean printBooks = false;
-
-	// -------------------------------------------- //
-	// MAIN MENU
-	// -------------------------------------------- //
-
-	public int numMainMenuPlaceholders = 11;
-//
-//	public Material placeholderFaction = Material.RED_BED;
-//	public Material placeholderPVP = Material.DIAMOND_SWORD;
-//	public Material placeholderQuests = Material.BOOK;
-//	public Material placeholderRoleplay = Material.CHAINMAIL_HELMET;
-//	public Material placeholderHelpChat = Material.EMERALD;
-//	public Material plaecholderMCMMO = Material.DIAMOND_ORE;
-//	public Material placeholderMap = Material.MAP;
-//	public Material placeholderMerchant = Material.GOLD_BLOCK;
-//	public Material placeholderTraits = Material.IRON_PICKAXE;
-//	public Material placeholderMassiveLock = Material.CHEST;
-//	public Material placeholderTickets = Material.PAPER;
 
 	// -------------------------------------------- //
 	// COMMAND ALIASES

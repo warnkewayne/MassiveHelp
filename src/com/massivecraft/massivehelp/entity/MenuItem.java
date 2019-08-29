@@ -90,6 +90,7 @@ public class MenuItem extends Entity<MenuItem>
         iMeta.setDisplayName(this.title);
         iMeta.setLore(desc);
         iMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+
         i.setItemMeta(iMeta);
 
         return i;
@@ -130,9 +131,23 @@ public class MenuItem extends Entity<MenuItem>
     }
 
     // -------------------------------------------- //
-    // DESCRIPTION METHODS
+    // MENUID METHODS
     // -------------------------------------------- //
 
+    public void setMenuId(String menuId)
+    {
+        if(MUtil.equals(this.menuId, menuId)) return;
+        this.menuId = menuId;
+    }
+
+    public String getMenuId()
+    {
+        return this.menuId;
+    }
+
+    // -------------------------------------------- //
+    // DESCRIPTION METHODS
+    // -------------------------------------------- //
 
     public void setDescription(String description)
     {
@@ -140,5 +155,10 @@ public class MenuItem extends Entity<MenuItem>
 
         this.description = description;
         this.changed();
+    }
+
+    public String getDescription()
+    {
+        return this.description;
     }
 }

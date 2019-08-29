@@ -34,14 +34,6 @@ public class CmdHelpEdit extends MassiveCommand
         // allows the sender to edit the contents of the help menu
         // with a GUI instead of config ...
 
-        // TODO:
-        // Open a chest GUI with same contents of the entered Menu
-        // When a menu item is clicked,
-        // Chat will prompt "What you want to edit"
-        //
-        // Command sender will type in what they want
-        // On enter, save.
-
         String menuName = this.readArg();
 
         MixinMessage mixinMessage = MixinMessage.get();
@@ -51,6 +43,10 @@ public class CmdHelpEdit extends MassiveCommand
             mixinMessage.messageOne(sender, Mson.parse("<b>%s does not exist."), menuName);
             return;
         }
+
+        // Open entered menu
+
+        //
     }
 
 

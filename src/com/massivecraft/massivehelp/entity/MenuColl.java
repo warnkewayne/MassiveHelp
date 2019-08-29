@@ -41,6 +41,16 @@ public class MenuColl extends Coll<Menu>
             this.syncAll();
         }
     }
+    // -------------------------------------------- //
+    // CORE MENU METHODS
+    // -------------------------------------------- //
+
+    public boolean isMenu(String str)
+    {
+        if(this.get(str) == null) return false;
+
+        return true;
+    }
 
     // -------------------------------------------- //
     // MENU CREATION
@@ -51,7 +61,7 @@ public class MenuColl extends Coll<Menu>
         Menu m = new Menu();
         m.setMenuName(menuName);
         m.setPrevMenuId(prevMenu, true);
-        
+
         // get prevMenu and add the created Menu to
         // its GUI
         Menu pm = MenuColl.get().get(prevMenu);

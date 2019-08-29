@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 public class Menu extends Entity<Menu> {
-    //TODO: Figure out how to tell what kind of coloring
+    //TODO: Figure out how to tell what kind of text coloring
     //TODO: everything needs
 
     // -------------------------------------------- //
@@ -45,6 +45,7 @@ public class Menu extends Entity<Menu> {
         this.nextMenuId = that.nextMenuId;
         this.numMenuItems = that.numMenuItems;
         this.listMenuItems = that.listMenuItems;
+        this.chestGui = that.chestGui;
 
         return this;
     }
@@ -83,24 +84,50 @@ public class Menu extends Entity<Menu> {
 
     private MassiveList<MenuItem> listMenuItems;
 
+    // This is a reference to the chestGui
+    // that is used in game.
+    // We should store this, so we dont
+    // create it everytime the help menu is used.
+    // Default: null
+
+    private ChestGui chestGui;
+
 
     // -------------------------------------------- //
     // CORE METHODS
     // -------------------------------------------- //
 
-    public void open(Player sender) {
+    private void createGui()
+    {
         Inventory i;
         i = Bukkit.createInventory(null, 0, this.menuName);
 
         //TODO: setItems();
-        // find a way for optimal positioning
 
         ChestGui gui = new ChestGui();
 
         gui.setInventory(i);
-        gui.isAutoclosing();
+        gui.setAutoremoving(false); // we dont want the gui to go away ):
+        gui.getMeta().put("menuId", this.id); // Utilize Meta Map to provide a way back to this Object
 
-        sender.openInventory(gui.getInventory());
+    }
+
+    private void setItems()
+    {
+        // We use returnGuiItem() from MenuItem
+        // and setAction() from ChestGui to help us
+        //
+        // We find optimal positioning for our items
+        // We then create a ItemStack with returnGuiItem()
+        // then use setAction() to do what we want
+        // i.e.. open BookGui or link another menu
+
+
+    }
+
+    public void open(Player sender)
+    {
+        sender.openInventory(this.chestGui.getInventory());
     }
 
     public void delete() {
