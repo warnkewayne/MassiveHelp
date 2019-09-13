@@ -16,7 +16,9 @@ public class Menu extends Entity<Menu> {
     // CONSTRUCT & META
     // -------------------------------------------- //
 
-    public Menu() {
+    public Menu()
+    {
+
     }
 
     public Menu(String id, String menuName, String prevMenuId, String nextMenuId, int numMenuItems, MassiveList<MenuItem> listMenuItems) {
@@ -27,7 +29,7 @@ public class Menu extends Entity<Menu> {
         this.numMenuItems = numMenuItems;
         this.listMenuItems = listMenuItems;
 
-        MenuColl.get().attach(this, id);
+       //Todo: attach in calls, not func --- MenuColl.get().attach(this, id);
     }
 
     public static Menu get(Object oid) {
@@ -45,7 +47,6 @@ public class Menu extends Entity<Menu> {
         this.nextMenuId = that.nextMenuId;
         this.numMenuItems = that.numMenuItems;
         this.listMenuItems = that.listMenuItems;
-        this.chestGui = that.chestGui;
 
         return this;
     }
@@ -84,25 +85,17 @@ public class Menu extends Entity<Menu> {
 
     private MassiveList<MenuItem> listMenuItems;
 
-    // This is a reference to the chestGui
-    // that is used in game.
-    // We should store this, so we dont
-    // create it everytime the help menu is used.
-    // Default: null
-
-    private ChestGui chestGui;
-
 
     // -------------------------------------------- //
     // CORE METHODS
     // -------------------------------------------- //
 
-    private void createGui()
+    private ChestGui createGui()
     {
         Inventory i;
-        i = Bukkit.createInventory(null, 0, this.menuName);
+        i = Bukkit.createInventory(null, this.numMenuItems, this.menuName);
 
-        //TODO: setItems();
+        //TODO: setItems(); ( USE PAGER CLASS )
 
         ChestGui gui = new ChestGui();
 
@@ -110,9 +103,10 @@ public class Menu extends Entity<Menu> {
         gui.setAutoremoving(false); // we dont want the gui to go away ):
         gui.getMeta().put("menuId", this.id); // Utilize Meta Map to provide a way back to this Object
 
+        return gui;
     }
 
-    private void setItems()
+    private void setItems(Inventory i)
     {
         // We use returnGuiItem() from MenuItem
         // and setAction() from ChestGui to help us
@@ -122,15 +116,17 @@ public class Menu extends Entity<Menu> {
         // then use setAction() to do what we want
         // i.e.. open BookGui or link another menu
 
-
     }
 
     public void open(Player sender)
     {
-        sender.openInventory(this.chestGui.getInventory());
+        ChestGui gui = createGui();
+
+        sender.openInventory(gui.getInventory());
     }
 
-    public void delete() {
+    public void delete()
+    {
         MenuColl coll = MenuColl.get();
 
         Menu prev = coll.get(prevMenuId);
@@ -140,16 +136,6 @@ public class Menu extends Entity<Menu> {
         next.setPrevMenuId(this.prevMenuId, false);
 
         this.detach();
-    }
-
-    private int calcInventorySize() {
-        //TODO: way too simple probably a better way
-
-        //if(this.numMenuItems <= 14) return 27;
-
-        //if(this.numMenuItems > 14) return 54;
-
-        return 0;
     }
 
     // -------------------------------------------- //
